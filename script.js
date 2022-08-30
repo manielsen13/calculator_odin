@@ -10,9 +10,6 @@ initializeFunctionBtns();
 initializeEqualsBtn();
 
 //note--doesn't work after I press equals and then a function(need to go through scenarios and write more if statements under the functions and equals buttons) 
-//note--add something to limit the decimals
-//note--touch up the handling of dividing by zero
-//note--add a limit to how big the numbers can get when typing them in
 
 //add functionality to buttons
 function updateScreen(displayThisNum) {
@@ -34,6 +31,9 @@ function initializeNumBtns(){
     const numBtnsList = document.querySelectorAll(".numBtn");
     for (let i = 0; i < numBtnsList.length; i++) {
         numBtnsList[i].addEventListener ("click", (e) => {
+            if (thisNumStr.length > 20) {
+                return;
+            }
             thisNumStr += numBtnsList[i].textContent;
             updateScreen(thisNumStr);
         })
@@ -89,23 +89,20 @@ function multiply (a,b) {
     return a * b;
 }
 function divide (a,b) {
-    if (b == 0) {
-        return "nope."
-    }
     return a / b;
 }
 
 function operate (a,b, operator) {
     if (operator === "+") {
-        return add(a,b);
+        return +add(a,b).toFixed(5);
     }
     if (operator === "-") {
-        return subtract(a,b);
+        return +subtract(a,b).toFixed(5);
     }
     if (operator === "/") {
-        return divide (a,b);
+        return +divide(a,b).toFixed(5);
     }
     if (operator === "x") {
-        return multiply(a,b);
+        return +multiply(a,b).toFixed(5);
     }
 }
