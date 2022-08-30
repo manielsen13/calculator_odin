@@ -10,7 +10,7 @@ initializeFunctionBtns();
 initializeEqualsBtn();
 
 //note--doesn't work after I press equals and then a function(need to go through scenarios and write more if statements under the functions and equals buttons) 
-
+//after hitting the equals sign I can type in another number and then hit it again and just does the previous operation i had chosen, which is a little confusing
 //add functionality to buttons
 function updateScreen(displayThisNum) {
     const screen = document.querySelector(".screen");
@@ -44,24 +44,24 @@ function initializeFunctionBtns () {
     const functionBtnsList = document.querySelectorAll(".functionBtn");
     for (let i = 0; i < functionBtnsList.length; i++) {
         functionBtnsList[i].addEventListener("click", (e) => {
-            //need to change the currentNumStr, to the pastNumStr, and clear the current, also need to operate on them for the running total
-            //operate here if both nums are full (because that would mean 3 numbers have been written in) Put that on display until the user starts typing in the next number
             if (thisNumStr != "" && lastNumStr != "") {
+                console.log("CHOSE OPTION 1: THE VALUES ARE- thisNumStr" +thisNumStr + " AND lastNumStr " + lastNumStr)
                 lastNumStr = operate(parseInt(lastNumStr), parseInt(thisNumStr), chosenFunction).toString();
                 thisNumStr = "";
                 updateScreen(lastNumStr);
                 chosenFunction = functionBtnsList[i].textContent;
                 return;
-            } else {
+            } else if (thisNumStr=="" && lastNumStr!="") {
+                console.log("ABANDONED")
+                return;
+            } else
+            {
+                console.log("CHOSE OPTION 2: THE VALUES ARE- thisNumStr" + thisNumStr + " AND lastNumStr " + lastNumStr)
                 chosenFunction = functionBtnsList[i].textContent;
                 lastNumStr = thisNumStr;
                 thisNumStr = "";
                 return;
             }
-            //operate the else statement otherwise AND DON'T CHANGE THE DISPLAY IN THIS EXAMPLE
-            
-
-            
         })
     }
 }
