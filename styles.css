@@ -43,6 +43,10 @@
     background-color: antiquewhite;
     min-height: 50px;
     min-width: 220px;
+    text-align: right;
+    font-size: 20px;
+    padding: 5px;
+
 }
 
 .numBtn {
