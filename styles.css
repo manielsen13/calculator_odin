@@ -1,3 +1,14 @@
+.title {
+    text-align: center;
+    padding: 25px;
+    font-size: 30px;
+}
+
+.pageContent {
+    display: flex;
+    justify-content: center;
+}
+
 .calculatorContainer {
     display: flex;
     flex-direction: column;
@@ -7,6 +18,8 @@
     max-width: fit-content;
     justify-content: center;
     align-items: center;
+
+
 }
 
 .allButtonsContainer {
@@ -29,5 +42,23 @@
 .screen {
     background-color: antiquewhite;
     min-height: 50px;
-    min-width: 250px;
+    min-width: 220px;
+}
+
+.numBtn {
+    padding: 15px;
+
+}
+
+.functionBtn {
+    padding: 15px;
+
+}
+
+.equalsBtn {
+    padding: 15px;
+
+}
+.clearBtn {
+    padding: 15px;
 }

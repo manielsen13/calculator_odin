@@ -1,51 +1,40 @@
 //globals
 let chosenFunction = "";
 
-let num1 = 0;
-let num2 = 0;
-
-let outcomeNum = 0;
-let outcomeStr = "";
-
 let thisNumStr = "";
 let lastNumStr = "";
 
 initializeNumBtns();
 initializeClearBtn();
 initializeFunctionBtns();
+initializeEqualsBtn();
 
-//display thisNumStr the entire time
-//when an operator button is pressed, set lastNumStr equal to thisNumStr and clear thisNumStr
-//add do whatever to them and store 
-
-
+//note--doesn't work after I press equals and then a function(need to go through scenarios and write more if statements under the functions and equals buttons) 
+//note--add something to limit the decimals
+//note--make it impossible to divide by 0
+//add a limit to how big the numbers can get
 //add functionality to buttons
-function updateScreen() {
+function updateScreen(displayThisNum) {
     const screen = document.querySelector(".screen");
-    screen.textContent = thisNumStr;
+    screen.textContent = displayThisNum;
 }
 
 function initializeClearBtn () {
     const clearBtn = document.querySelector(".clearBtn");
     clearBtn.addEventListener("click", (e) => {
-        console.log("it worked")
-        num1 = 0;
-        num2 = 0;
-        outcomeNum = 0;
-        outcomeStr = "";
         thisNumStr = "";
         lastNumStr = "";
-        updateScreen();
+        chosenFunction = "";
+        updateScreen(thisNumStr);
     })
 }
 
 function initializeNumBtns(){ 
     const numBtnsList = document.querySelectorAll(".numBtn");
     for (let i = 0; i < numBtnsList.length; i++) {
-        console.log(numBtnsList[i].textContent);
         numBtnsList[i].addEventListener ("click", (e) => {
             thisNumStr += numBtnsList[i].textContent;
-            updateScreen();
+            updateScreen(thisNumStr);
         })
     }
 }
@@ -54,19 +43,37 @@ function initializeFunctionBtns () {
     const functionBtnsList = document.querySelectorAll(".functionBtn");
     for (let i = 0; i < functionBtnsList.length; i++) {
         functionBtnsList[i].addEventListener("click", (e) => {
-            chosenFunction = functionBtnsList[i].textContent;
+            //need to change the currentNumStr, to the pastNumStr, and clear the current, also need to operate on them for the running total
+            //operate here if both nums are full (because that would mean 3 numbers have been written in) Put that on display until the user starts typing in the next number
+            if (thisNumStr != "" && lastNumStr != "") {
+                lastNumStr = operate(parseInt(lastNumStr), parseInt(thisNumStr), chosenFunction).toString();
+                thisNumStr = "";
+                updateScreen(lastNumStr);
+                chosenFunction = functionBtnsList[i].textContent;
+                return;
+            } else {
+                chosenFunction = functionBtnsList[i].textContent;
+                lastNumStr = thisNumStr;
+                thisNumStr = "";
+                return;
+            }
+            //operate the else statement otherwise AND DON'T CHANGE THE DISPLAY IN THIS EXAMPLE
+            
+
+            
         })
     }
 }
 
 function initializeEqualsBtn() {
-    const equalsBtn = document.querySelector("equalsBtn");
+    const equalsBtn = document.querySelector(".equalsBtn");
     equalsBtn.addEventListener("click", (e) => {
-        outcomeNum = operate();
-        currentNum = outcomeNum;
-        thisNumStr = outcomeNum.toString();
-        lastNumStr = "";
-        updateScreen();
+        //check if both button values are filled in
+        if (thisNumStr != "" && lastNumStr != "") {
+            lastNumStr = operate(parseInt(lastNumStr), parseInt(thisNumStr), chosenFunction).toString();
+            thisNumStr = "";
+            updateScreen(lastNumStr);
+        }
     })
 }
 
@@ -85,16 +92,16 @@ function divide (a,b) {
 }
 
 function operate (a,b, operator) {
-    if (operator === "plus") {
+    if (operator === "+") {
         return add(a,b);
     }
-    if (operator === "minus") {
+    if (operator === "-") {
         return subtract(a,b);
     }
-    if (operator === "dividedBy") {
+    if (operator === "/") {
        return divide (a,b);
     }
-    if (operator === "times") {
+    if (operator === "x") {
         return multiply(a,b);
     }
 }
